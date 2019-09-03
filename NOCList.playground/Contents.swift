@@ -29,32 +29,104 @@ This message will self destruct in 5 seconds.
 */
 //: ## Step 1
 //: Create constants for each of the above agents and store all their information in a tuple.
+typealias NOCS = (coverName: String, realName: String, accessLevel: Int, compromised: Bool)
 
-
-
+let noc1: NOCS = ("Ethan Hunt", "Tom Cruise", 8, false)
+let noc2: NOCS = ("Jim Phelps", "Jon Voight", 9, true)
+let noc3: NOCS = ("Claire Phelps", "Emmanuelle Beart", 5, false)
+let noc4: NOCS = ("Eugene Kittridge", "Henry Czerny", 10, true)
+let noc5: NOCS = ("Franz Krieger", "Jean Reno", 4, false)
+let noc6: NOCS =  ("Luther Stickell", "Ving Rhames", 4, false)
+let noc7: NOCS =  ("Sarah Davies", "Kristin Scott Thomas", 5, true)
+let noc8: NOCS = ("Max RotGrab", "Vanessa Redgrave", 4, false)
+let noc9: NOCS = ("Hannah Williams", "Ingeborga Dapkūnaitė", 5, true)
+let noc10: NOCS = ("Jack Harmon", "Emilio Estevez", 6, true)
+let noc11: NOCS = ("Frank Barnes", "Dale Dye", 9, false)
 //: ## Step 2
 //: Place the above constants inside an array. Declare this array as a constant as well.
+// Using typealias
+let nocList1:[NOCS] = [noc1, noc2, noc3, noc4, noc5, noc6, noc7, noc8, noc9, noc10, noc11]
+
+// Without typealias
+let nocList:[(coverName: String, realName: String, accessLevel: Int, compromised: Bool)] =
+    [noc1, noc2, noc3, noc4, noc5, noc6, noc7, noc8, noc9, noc10, noc11]
+
+// for loop
+func countCompromised() {
+    var compromisedCount = 0
+    for burned in nocList {
+        if burned.compromised == true {
+            compromisedCount += 1
+        }
+    }
+    print("The number of compromised agents is: \(compromisedCount)")
+}
 
 
+// for in loop
+print("Using for in:")
+func countCompromised2() {
+    var compromisedCount: Int = 0
+    for burned in 0..<nocList.count {
+        if nocList[burned].compromised == true {
+            compromisedCount = compromisedCount + 1
+        }
+    }
+    print("The number of compromised agents is: \(compromisedCount)")
+}
 
-//: ## Step 3
-//: Create a function that calculates the total number of compromised agents. Inside the function, iterate over the array of agents to determine which ones are compromised. Return the total count.
+// while loop
 
+func moreAgents(_ index: Int) -> Bool {
+    if index == nocList.count {
+        return false
+    } else {
+        return true
+    }
+}
+func countCompromised3() {
+    //var agentCount = nocList.count
+    var compromisedCount: Int = 0, index: Int = 0
+    while (moreAgents(index)) {
+        if (nocList[index].compromised == true) {
+            compromisedCount += 1
+        }
+        index += 1
+    }
+    print("The number of compromised agents is: \(compromisedCount)")
+}
+
+// Using a filter
+func filterCompromised() {
+    let compromisedCount = nocList.filter{$0.compromised == true}.count
+    print("Using filter:")
+    print("The number of compromised agents is: \(compromisedCount)")
+}
 
 
 //: ## Step 4
 //: Call the above function to find the total number of compromised agents and then print a sentence that says "# agents have been compromised!" using string interpolation.
-
-
-
+print("Using for:"); countCompromised()
+print("\nUsing for in:"); countCompromised2()
+print("\nUsing while:"); countCompromised3()
+print("\nUsing filter:"); filterCompromised()
 //: ## Step 5
 //: Create a function called "findCleanAgents" that both prints the cover names of all uncompromised agents, as well as returns an array of agents that are uncompromised.
-
+var cleanNOCList:[(coverName: String, realName: String, accessLevel: Int, compromised: Bool)] = []
+func findCleanAgents() {
+    for clean in nocList {
+        if clean.compromised == false {
+            print("\(clean.coverName) is an uncompromised agent.")
+            cleanNOCList.append(clean)
+        }
+    }
+}
 
 
 //: ## Step 6
 //: Call the above function to find the total number of clean agents and print a message that says "# clean agents out of # total agents." Use the total number of agents in the array from step 2 as the second number in the string.
-
+findCleanAgents()
+print("\(cleanNOCList.count) of clean agents out of \(nocList.count) total agents")
 
 
 //: ## Step 7
